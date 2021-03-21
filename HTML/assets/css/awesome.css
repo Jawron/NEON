@@ -34,6 +34,6 @@
 }
 .left-menu .nav-item:hover{
     background-color: rgba(0,172,193 ,1);
+    border-radius:0;
     border-radius:0
-
 }
