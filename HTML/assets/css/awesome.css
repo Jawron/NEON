@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 
 
 body {
@@ -8,67 +12,163 @@ body {
 .lead{
     font-family: 'Poiret One', cursive;
 }
-.row {
-    --bs-gutter-x: 0rem;
-    --bs-gutter-y: 0;
+
+.bk-left-menu{
+    width:250px;
+    height:100vh;
+    background-color: #747d8c;
+    position:relative;
+    float: left;
+}
+.inner-left-menu{
+    width: 100%;
+    height: 100%;
+}
+.ul-left-menu{
+    list-style: none;
+    position:relative;
+    background-color: #747d8c;
+    width: 100%;
+    padding:0
+}
+.ul-left-menu li{
+    color:#ced6e0;
+
+}
+.ul-left-menu li:hover{
+    color:#ffffff;
+    cursor: pointer;
+
+}
+.menu-heading{
+    background-color: lightblue;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    letter-spacing:2px;
+    text-transform: uppercase;
+}
+.display-none{
+    display: none;
+}
+.menu-title{
+    display: none;
+    padding: 10px;
+}
+.menu-icon {
+    float: right;
+    margin: 10px;
+    display: none;
+    height: 22px;
+}
+.hydrated{
+}
+.has-children-icon{
+    margin: 5px 15px;
+    height: 18px;
+}
+.has-children div {
     display: flex;
-    flex-wrap: wrap;
-    margin-top: calc(var(--bs-gutter-y) * -1);
-    margin-right: calc(var(--bs-gutter-x) / -2);
-    margin-left: calc(var(--bs-gutter-x) / -2);
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+ion-icon {
+    vertical-align: middle;
+
+}
+.has-children div a {
+    font-family: 'Montserrat', sans-serif;
+    vertical-align: middle
+}
+.left-menu a{
+    font-family: 'Montserrat', sans-serif;
+    vertical-align: middle
+}
+.material-icons{
+}
+.left-menu ion-icon{
+    font-size: 24px;
+}
+ion-ion {
+    vertical-align: middle;
 }
 .left-menu{
-    background-color: rgba(77,208,225 ,1);
-    min-height: 100%;
-    height: 100vh;
+    text-indent: 20px;
 }
-.brand{
-    background-color: rgba(0,172,193 ,1);
+.left-menu,
+.has-children span {
+    font-weight: 500;
+    text-transform: capitalize;
+    letter-spacing: 1.5px;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    padding:12px 0px;
 }
-.brand a {
-    color:#fff;
-    text-decoration: none;
+.menu-children{
+    background-color:#fafafa;
+    color:#2f3542;
+    list-style: none;
+    padding: 0;
 }
-.accordion-button{
-    padding: 0.5rem 1rem;
-    border:none;
-    border-radius:0;
-    position:relative
+.menu-children li {
+    color:#2f3542;
+    text-indent: 40px;
+    padding: 7px 0;
 }
-.accordion-button:focus{
-    border: none;
-    outline:0 !important;
-    box-shadow: none;
+.menu-children li:hover {
+    background-color: #dfe4ea;
+    color:#2f3542;
 }
-.accordion-item:first-of-type .accordion-button{
-    border-radius:0
-}
-.accordion-button:not(.collapsed){
-    background-color: rgba(0,172,193 ,1);
+@media screen and (max-width:540px){
+    .menu-icon,.menu-title{
+        display: inline-block;
+    }
+    .bk-left-menu{
+        width:100%;
+        height:100%;
+        background-color:transparent;
+    }
+
 
 }
-.left-menu .nav-item:hover{
-    background-color: rgba(0,172,193 ,1);
 
-}
-.accordion-button,
-.left-menu .nav-item .nav-link{
-    font-size:.9rem;
-    font-weight:600;
-    text-transform: uppercase;
-    color:rgba(255,255,255,0.7);
-    letter-spacing:2px;
-}
-.accordion-button:hover,
-.left-menu .nav-item .nav-link:hover{
-    color:#fff;
-    transition: .5ms;
-}
-.accordion-button::after{
-    display:none
-}
-.left-menu .circle-plus{
-    position:absolute;
-    right:5%;
-    font-size:1.2em
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
