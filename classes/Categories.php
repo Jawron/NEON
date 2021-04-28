@@ -22,6 +22,7 @@ class Categories extends Main
         } else {
             $query = "INSERT INTO categories (name) VALUES (:name)";
         }
+        echo $query;
 
         return $this->insert($query,$params);
 

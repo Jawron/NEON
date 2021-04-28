@@ -79,5 +79,25 @@ class Main{
         }
     }
 
+    // functions matchKeys() and matchValues() work together, they match the number of keys with the number of the values in the mysql query
+    // so you wont get an error if some fields are missing
+    protected function matchKeys($array){
+        $keys_params = [];
+
+        foreach ($array as $key => $value){
+            $keys_params[] = $key;
+        }
+        return implode(",", $keys_params);
+
+    }
+    protected function matchValues($array){
+
+        $values = [];
+        foreach ($array as $key => $value){
+            $new = ":".$key;
+            $values[] = $new;
+        }
+        return implode(",", $values);
+    }
 
 }
