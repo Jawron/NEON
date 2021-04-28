@@ -1,6 +1,5 @@
 <?php
-
-require_once "../config.php";
+require_once(realpath($_SERVER["DOCUMENT_ROOT"]) .'/neon/includes/config.php');
 
 class Database{
 
@@ -21,7 +20,8 @@ class Database{
         }
     }
 
-}
 
+
+}
 
 $database = new Database();

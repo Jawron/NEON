@@ -13,6 +13,23 @@ body {
     font-family: 'Poiret One', cursive;
 }
 
+/*
+ CSS: CATEGORIES PAGES (and everything related to categories)
+*/
+#parent_categories {
+    display:none;
+
+}
+
+
+
+
+
+
+
+
+
+
 .bk-left-menu{
     width:250px;
     height:100vh;

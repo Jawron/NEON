@@ -1,41 +1,21 @@
 <?php
 
-include_once "../init.php";
-
-
-
-
-$categories = new Categories();
-
-
-
-
-if (isset($_POST['submit'])) {
-
-    $name = $_POST['name'];
-    $phone = $_POST['phone'];
-
-    $values = [
-        'name' => $name,
-        'phone' => $phone
-    ];
-    var_dump($values);
-    $sql = "INSERT INTO categories (name, parent_id) VALUES (:name, :phone);";
-
-
-    $categories->Insert($sql, $values);
-
-
-}
-
+include_once "init.php";
 
 ?>
 
-<form method="post" action="">
-    <input type="text" name="name">
-    <br>
-    <input type="text" name="phone">
-    <br>
-    <input type="submit" name="submit" value="SEND">
-</form>
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="../assets/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="../assets/css/awesome.css" rel="stylesheet" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+<body>
 
