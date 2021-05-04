@@ -15,7 +15,7 @@ if(isset($_POST['submit'])){
     $tags = $_POST['tags'];
     $author = "Author";
     $featuredImage = "/path/to/the/image";
-    $created_at = date("Y-m-d");
+    $created_at = date("Y-m-d H:i:s");
 
 
     $params = [
@@ -64,7 +64,7 @@ if(isset($_POST['submit'])){
                     foreach ($cat as $item){
                         ?>
                         <div class="form-check col-md-4" >
-                            <input class="form-check-input" name="postCategories[]" type="checkbox" value="<?php echo $item['name']?>" id="checkbox-<?php echo $item['id']?>">
+                            <input class="form-check-input" name="postCategories[]" type="checkbox" value="<?php echo $item['id']?>" id="checkbox-<?php echo $item['id']?>">
                             <label class="form-check-label" for="checkbox-<?php echo $item['id']?>">
                                 <?php echo $item['name']?>
                             </label>

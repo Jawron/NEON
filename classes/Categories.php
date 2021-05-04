@@ -41,4 +41,13 @@ class Categories extends Main
         return $this->update($query,$params);
     }
 
+
+    public function deleteCategory($id){
+        $arr['id'] = $id;
+
+        $query = "DELETE FROM ". $this->table ." WHERE id = :id";
+        return $this->delete($query,$arr);
+    }
+
+
 }

@@ -44,6 +44,7 @@ class Main{
             throw new Exception($e->getMessage());
         }
     }
+
     // Update a row/s in a Database Table
     public function update( $statement = "" , $parameters = [] ){
         try{
@@ -55,8 +56,19 @@ class Main{
         }
     }
 
-    // Remove a row/s in a Database Table
+    // Remove a row/s from displaying it in a Database Table
     public function remove( $statement = "" , $parameters = [] ){
+        try{
+            global $database;
+            $this->executeStatement( $statement , $parameters );
+
+        }catch(Exception $e){
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    // Deletes a row/s in a Database Table
+    public function delete( $statement = "" , $parameters = [] ){
         try{
             global $database;
             $this->executeStatement( $statement , $parameters );

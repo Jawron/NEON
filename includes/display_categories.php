@@ -23,7 +23,7 @@ $categories = new Categories();
             <th scope="row"><?php echo $item['id']?></th>
             <td><?php echo $item['name']?></td>
             <td><a href="../includes/edit_category.php?id=<?php echo $item['id'] ?>&name=<?php echo $item['name'] ?>">EDIT</a></td>
-            <td><a href="">DELETE</a></td>
+            <td><a href="../includes/delete_category.php?id=<?php echo $item['id'] ?>">DELETE</a></td>
         </tr>
         <tr>
             <td colspan="4">
