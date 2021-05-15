@@ -47,7 +47,9 @@ class Posts extends Main{
 
 
         $query = "UPDATE ". $this->table . " SET ". $keys ." WHERE id=".$id;
-        return $this->update($query,$f_params);
+        echo $query;
+        $result =  $this->update($query,$f_params);
+        return $result;
     }
 
 

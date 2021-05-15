@@ -1,5 +1,6 @@
 <?php
 include_once "../init.php";
+global $session;
 if(!$session->isSignedIn()){
     Main::redirect('../login.php');
 } else {
@@ -16,6 +17,13 @@ include_once  'b_includes/top_menu.php';
 <h1>Dashboard</h1>
 
 
+
+<?php
+
+if($session_message){
+    echo $session_message;
+}
+?>
 
 
 

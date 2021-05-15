@@ -54,8 +54,8 @@ class Main{
     public function update( $statement = "" , $parameters = [] ){
         try{
             global $database;
-            $this->executeStatement( $statement , $parameters );
-
+            $result = $this->executeStatement( $statement , $parameters );
+            return $result->rowCount();
         }catch(Exception $e){
             throw new Exception($e->getMessage());
         }
@@ -65,7 +65,7 @@ class Main{
     public function remove( $statement = "" , $parameters = [] ){
         try{
             global $database;
-            $this->executeStatement( $statement , $parameters );
+             $this->executeStatement( $statement , $parameters );
 
         }catch(Exception $e){
             throw new Exception($e->getMessage());
@@ -76,7 +76,7 @@ class Main{
     public function delete( $statement = "" , $parameters = [] ){
         try{
             global $database;
-            $this->executeStatement( $statement , $parameters );
+             $this->executeStatement( $statement , $parameters );
 
         }catch(Exception $e){
             throw new Exception($e->getMessage());
@@ -194,6 +194,17 @@ class Main{
         }
     }
 
+    protected function setAttributesForUpdate($params){
+        // filter the array for null values or false or empty
+        $f_params = array_filter($params,"strlen");
+
+        // create part of the SQL query ex: name=:name, title=:title
+        $keys_values = [];
+        foreach ($f_params as $key => $param){
+            $keys_values[] = $key. " = :".$key;
+        }
+        return $keys = implode(",", $keys_values);
+    }
 
 
 
@@ -218,4 +229,5 @@ class Main{
 
 
 
-}
+
+} // END OF CLASS

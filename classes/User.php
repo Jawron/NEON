@@ -34,10 +34,10 @@ class User extends Main{
         if(!empty($err)){
             if(is_array($err)){
                 foreach ($err as $error){
-                    echo  self::displayValidationErrors($error);
+                    self::displayValidationErrors($error);
                 }
             } else {
-                echo  self::displayValidationErrors($err);
+                self::displayValidationErrors($err);
             }
         }
     }
@@ -50,7 +50,7 @@ class User extends Main{
 
         $mail = new PHPMailer;
         $mail->isSMTP();
-        $mail->SMTPDebug = 2; // 0 = off (for production use) - 1 = client messages - 2 = client and server messages
+        $mail->SMTPDebug = 0; // 0 = off (for production use) - 1 = client messages - 2 = client and server messages
         $mail->Host = "smtp.gmail.com"; // use $mail->Host = gethostbyname('smtp.gmail.com'); // if your network does not support SMTP over IPv6
         $mail->Port = 587; // TLS only
         $mail->SMTPSecure = 'tls'; // ssl is depracated
@@ -75,7 +75,7 @@ class User extends Main{
         $query = "SELECT email FROM users";
 
         $all =  $this->selectAll($query);
-        return $all[0];
+        return $all;
     }
     private function getInfoForValidation($email){
         $query = "SELECT * FROM ".$this->table." WHERE email= '$email'";
@@ -84,11 +84,11 @@ class User extends Main{
     }
 
     private function getUser($email){
+        if(!empty($email) || $email !== null){
         $query = "SELECT * FROM ".$this->table." WHERE email='$email'";
-        echo $query;
-
         $all =  $this->selectAll($query);
-        return $all[0];
+            return $all[0];
+        }
     }
 
 
@@ -237,21 +237,175 @@ class User extends Main{
                 $this->errors[] = "Email dosent exist";
             }
 
+        }
+
+    }
 
 
 
+    public function addUser($params){
+        // assign values to each property from the class
+        foreach ($params as $key => $param) {
+            $this->$key = $param;
+        }
+        //get user info based by email
+        $allUserData = $this->getUser($this->email);
 
+        $dbEmail = !empty($allUserData['email']);
+        $dbPassword = !empty($allUserData['password']);
+        if($dbEmail !== NULL){
+            if($dbEmail == $this->email){
+                $this->errors[] = "Email already exists!";
+            }
+        }
+
+
+        if(empty($this->email)){
+            $this->errors[] = "Email field cannot be empty!";
+        }
+
+        if(empty($this->password)){
+            $this->errors[] = "Password field cannot be empty!";
+        }
+
+        if (!preg_match('/(^(?=.*\d))^[A-Za-z][A-Za-z0-9]{5,31}$/', "$this->password")){
+            $this->errors[] = "Password must contain only <strong>Letters and Numbers</strong>  and at least 6 characters";
+        }
+
+        if(!empty($this->errors)){
+            return $this->displayErrors($this->errors);
+        } else {
+            $securedPassword = password_hash($this->password,PASSWORD_DEFAULT);
+            $validationCode = $this->setToken();
+            $validParams = [
+                'firstName' =>$this->firstName,
+                'lastName' =>$this->lastName,
+                'username' =>$this->username,
+                'email' =>$this->email,
+                'password' =>$securedPassword,
+                'role' =>$this->role,
+                'dob' =>$this->dob,
+                'phone' =>$this->phone,
+                'recoveryEmail' =>$this->recoveryEmail,
+                'active' =>'0',
+                'ValidationCode' => $validationCode
+            ];
+
+            $query = "INSERT INTO ". $this->table ." (". $this->matchKeys($validParams).") VALUES 
+            (". $this->matchValues($validParams) .")";;
+
+            $new =  $this->insert($query,$validParams);
+
+
+
+            if($new){
+                $email = $this->email;
+                $subject = "Complete registration Email";
+                $msg = "<a href='".__FILE__ ."?email={$this->email}&validationCode={$validationCode}'>".__FILE__ ."?email={$this->email}&validationCode={$validationCode}</a>
+                        HERE WILL BE THE LINKS FOR THE ACTIVATION <br>
+                        EMAIL {$this->email} <br>
+                        AC {$validationCode}
+                        ";
+                $name = $this->username;
+                $this->sentEmail($email, $subject, $msg,$name);
+                return $new;
+            }
 
         }
 
 
 
 
+    }
+
+    public function getUserByID($id){
+
+        $query = "SELECT * FROM ". $this->table ." WHERE id=".$id;
+
+        $result =  $this->selectAll($query);
+
+        return $result[0];
+    }
+
+    public function updateUser($params,$id){
+
+        // assign values to each property from the class
+        foreach ($params as $key => $param) {
+            $this->$key = $param;
+        }
+        //get user info based by email
+        $userData = $this->getUserByID($id);
+
+        $dbEmail = $userData['email'];
+        $dbPassword = $userData['password'];
+
+        $activeEmails = $this->getAllUsersEmails();
+//        foreach ($activeEmails as $key => $value){
+//            if ($value['email'] == $this->email) {
+//                unset($activeEmails[$key]);
+//            }
+//        }
+        $newemails = [];
+        foreach($activeEmails as $key => $value){
+            foreach ($value as $key2 => $value2){
+                $newemails[] = $value2;
+            }
+
+        }
 
 
+        if($dbEmail != $this->email){
+        foreach ($newemails as $key => $value){
+            if ($value == $this->email) {
+                unset($activeEmails[$key]);
+            }
+        }
+            if(in_array($this->email,$newemails)){
+                $this->errors[] = "Email already exists!";
+            }
+        }
 
 
+        if(password_verify($dbPassword, $this->password) !== password_verify($this->password, $dbPassword)){
+            if (!preg_match('/(^(?=.*\d))^[A-Za-z][A-Za-z0-9]{5,31}$/', "$this->password")){
+                $this->errors[] = "Password must contain only <strong>Letters and Numbers</strong>  and at least 6 characters";
+            }
+            $securedPassword = password_hash($this->password, PASSWORD_DEFAULT);
+        }
 
+        if(empty($this->email)){
+            $this->errors[] = "Email field cannot be empty!";
+        }
+
+        if(empty($this->password)){
+            $this->errors[] = "Password field cannot be empty!";
+        }
+
+
+        if(!empty($this->errors)){
+            $this->displayErrors($this->errors);
+        } else {
+
+            $validParams = [
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'username' => $this->username,
+                'email' => $this->email,
+                'role' => $this->role,
+                'dob' => $this->dob,
+                'phone' => $this->phone,
+                'recoveryEmail' => $this->recoveryEmail,
+            ];
+            if(!empty($securedPassword)){
+                $validParams['password'] = $securedPassword;
+            }
+            $attributes = $this->setAttributesForUpdate($validParams);
+
+            $query = "UPDATE " . $this->table . " SET " . $attributes . " WHERE id=" . $id;
+
+            $result = $this->update($query,$validParams);
+            return $result;
+        }
     }
 
 
@@ -267,7 +421,4 @@ class User extends Main{
 
 
 
-
-
-
-}
+} //END OF CLASS
